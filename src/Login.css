@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&display=swap');
+
+h1 {
+    font-family: 'Rubik', 'Inter', sans-serif;
+    font-size: 3em;
+    font-weight: bold;
+}
+
+h2 {
+    font-family: 'PT Sans Caption','Inter', sans-serif;
+}
+
+.btn {
+    font-family: 'PT Sans Caption','Inter', sans-serif;
+    font-weight: 500;
+    background-color: #1DB954;
+    border-color: #1DB954;
+}
+
+.btn:hover {
+    background-color: #1BAB4E;
+    border-color: #1BAB4E;
+}
