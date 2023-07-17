@@ -6,6 +6,11 @@ import TrackCards from './TrackCards.js'
 import axios from 'axios'
 import './Dashboard.css'
 
+const CLIENT_ID = '2c11048635dd4d6f928a6a38371cbfe9'
+const CLIENT_SECRET = '9bb6c018789e4e93818369e315931f37'
+const REDIRECT_URI = 'https://main.d1uusiw6xv6cal.amplifyapp.com'
+
+
 const spotifyApi = new SpotifyWebApi({
     clientId: '2c11048635dd4d6f928a6a38371cbfe9'
 })
@@ -19,20 +24,38 @@ export default function Dashboard({ code }) {
     const [searchResults, setSearchResults] = useState([])
 
     useEffect(() => {
-        if (code) {
-            axios.post('https://6z79gzm2kk.execute-api.ca-central-1.amazonaws.com/dev/auth/login', {
-                code: code
-            })
-            .then((response) => {
-                setAccessToken(response.data.accessToken)
-                setRefreshToken(response.data.refreshToken)
-                setExpiresIn(response.data.expiresIn)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-        }
-    }, [code])
+        const obtainAccessToken = async () => {
+          if (!code) return;
+      
+          try {
+            const response = await fetch('https://accounts.spotify.com/api/token', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                Authorization: `Basic ${Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+              },
+              body: new URLSearchParams({
+                grant_type: 'authorization_code',
+                code,
+                redirect_uri: 'YOUR_REDIRECT_URI',
+              }),
+            });
+      
+            if (response.ok) {
+              const data = await response.json();
+              setAccessToken(data.access_token);
+              setRefreshToken(data.refresh_token);
+              setExpiresIn(data.expires_in);
+            } else {
+              console.error('Failed to obtain access token:', response.status);
+            }
+          } catch (error) {
+            console.error('Failed to fetch access token:', error);
+          }
+        };
+      
+        obtainAccessToken();
+      }, [code]);      
 
     useEffect(() => {
         if (!refreshToken || !expiresIn) return
