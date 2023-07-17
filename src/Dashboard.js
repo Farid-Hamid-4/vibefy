@@ -10,7 +10,7 @@ const CLIENT_SECRET = '9bb6c018789e4e93818369e315931f37';
 const REDIRECT_URI = 'https://main.d2xqpnct98klit.amplifyapp.com/';
 
 const spotifyApi = new SpotifyWebApi({
-  clientId: process.env.REACT_APP_CLIENT_ID,
+  clientId: CLIENT_ID,
 });
 
 export default function Dashboard({ code }) {
