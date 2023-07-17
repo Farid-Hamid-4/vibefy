@@ -9,7 +9,7 @@ dotenv.config();
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
-const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
+const REDIRECT_URI = 'https://main.d2xqpnct98klit.amplifyapp.com/';
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.REACT_APP_CLIENT_ID,

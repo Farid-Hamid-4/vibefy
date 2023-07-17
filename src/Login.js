@@ -4,9 +4,10 @@ import "./Login.css";
 import dotenv from 'dotenv';
 dotenv.config();
 
+const REDIRECT_URI = 'https://main.d2xqpnct98klit.amplifyapp.com/';
 const SCOPES =
   "user-top-read playlist-modify-private streaming user-read-email user-read-private user-library-read user-library-modify user-read-playback-state user-modify-playback-state";
-const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&scope=${SCOPES}`;
+const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=${SCOPES}`;
 
 export default function Login() {
   return (
