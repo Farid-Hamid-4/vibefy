@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Button } from "react-bootstrap";
 import "./Login.css";
 
-const CLIENT_ID = '9bb6c018789e4e93818369e315931f37';
+const CLIENT_ID = '2c11048635dd4d6f928a6a38371cbfe9';
 const REDIRECT_URI = 'https://main.d2xqpnct98klit.amplifyapp.com/';
 const SCOPES =
   "user-top-read playlist-modify-private streaming user-read-email user-read-private user-library-read user-library-modify user-read-playback-state user-modify-playback-state";
