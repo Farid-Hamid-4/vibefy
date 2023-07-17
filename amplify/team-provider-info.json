@@ -20,6 +20,12 @@
       },
       "api": {
         "api24b2ee65": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1uusiw6xv6cal",
+          "type": "cicd"
+        }
       }
     }
   }
