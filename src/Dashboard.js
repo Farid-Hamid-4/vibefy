@@ -3,7 +3,6 @@ import { Container, Form, Dropdown, Image, Row } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
 import SpotifyWebApi from 'spotify-web-api-node'
 import TrackCards from './TrackCards.js'
-import axios from 'axios'
 import './Dashboard.css'
 
 const CLIENT_ID = '2c11048635dd4d6f928a6a38371cbfe9'
@@ -32,7 +31,7 @@ export default function Dashboard({ code }) {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                Authorization: `Basic ${Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+                'Authorization': `Basic ` + btoa(CLIENT_ID + ':' + CLIENT_SECRET)
               },
               body: new URLSearchParams({
                 grant_type: 'authorization_code',
@@ -57,25 +56,35 @@ export default function Dashboard({ code }) {
         obtainAccessToken();
       }, [code]);      
 
+    const refreshAccessToken = async () => {
+        try {
+            const response = await fetch('https://accounts.spotify.com/api/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': `Basic ` + btoa(CLIENT_ID + ':' + CLIENT_SECRET)
+            },
+            body: `grant_type=refresh_token&refresh_token=${refreshToken}`
+            });
+        
+            const data = await response.json();
+            setAccessToken(data.access_token);
+            setExpiresIn(data.expires_in);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    
     useEffect(() => {
-        if (!refreshToken || !expiresIn) return
-    
-        const interval = setInterval(() => {
-          axios
-            .post('https://6z79gzm2kk.execute-api.ca-central-1.amazonaws.com/dev/auth/refresh', {
-              refreshToken: refreshToken
-            })
-            .then((response) => {
-              setAccessToken(response.data.accessToken)
-              setExpiresIn(response.data.expiresIn)
-            })
-            .catch((error) => {
-              console.log(error)
-            })
-        }, (expiresIn - 60) * 1000)
-    
-        return () => clearInterval(interval)
-      }, [refreshToken, expiresIn])
+        if (refreshToken && expiresIn) {
+            const interval = setInterval(() => {
+            refreshAccessToken();
+            }, (expiresIn - 60) * 1000);
+        
+            return () => clearInterval(interval);
+        }
+    }, [refreshToken, expiresIn]);
+      
 
     useEffect(() => {
         if (!accessToken) return
