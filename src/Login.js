@@ -1,13 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Button } from "react-bootstrap";
 import "./Login.css";
-import dotenv from 'dotenv';
-dotenv.config();
 
+const CLIENT_ID = '9bb6c018789e4e93818369e315931f37';
 const REDIRECT_URI = 'https://main.d2xqpnct98klit.amplifyapp.com/';
 const SCOPES =
   "user-top-read playlist-modify-private streaming user-read-email user-read-private user-library-read user-library-modify user-read-playback-state user-modify-playback-state";
-const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=${SCOPES}`;
+const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=${SCOPES}`;
 
 export default function Login() {
   return (
