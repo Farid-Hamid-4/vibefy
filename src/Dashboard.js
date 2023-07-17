@@ -3,6 +3,7 @@ import { Container, Form, Dropdown, Image, Row } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
 import SpotifyWebApi from 'spotify-web-api-node'
 import TrackCards from './TrackCards.js'
+import axios from 'axios'
 import './Dashboard.css'
 
 const spotifyApi = new SpotifyWebApi({
@@ -10,10 +11,48 @@ const spotifyApi = new SpotifyWebApi({
 })
 
 export default function Dashboard({ code }) {
-    const accessToken = ''
+    const [accessToken, setAccessToken] = useState('')
+    const [refreshToken, setRefreshToken] = useState('')
+    const [expiresIn, setExpiresIn] = useState('')
     const [userProfile, setUserProfile] = useState([])
     const [search, setSearch] = useState('')
     const [searchResults, setSearchResults] = useState([])
+
+    useEffect(() => {
+        if (code) {
+            axios.post('https://6z79gzm2kk.execute-api.ca-central-1.amazonaws.com/dev/auth/login', {
+                code: code
+            })
+            .then((response) => {
+                setAccessToken(response.data.accessToken)
+                setRefreshToken(response.data.refreshToken)
+                setExpiresIn(response.data.expiresIn)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        }
+    }, [code])
+
+    useEffect(() => {
+        if (!refreshToken || !expiresIn) return
+    
+        const interval = setInterval(() => {
+          axios
+            .post('https://6z79gzm2kk.execute-api.ca-central-1.amazonaws.com/dev/auth/refresh', {
+              refreshToken: refreshToken
+            })
+            .then((response) => {
+              setAccessToken(response.data.accessToken)
+              setExpiresIn(response.data.expiresIn)
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+        }, (expiresIn - 60) * 1000)
+    
+        return () => clearInterval(interval)
+      }, [refreshToken, expiresIn])
 
     useEffect(() => {
         if (!accessToken) return

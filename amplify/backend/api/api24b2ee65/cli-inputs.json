@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "paths": {
+    "/auth/login": {
+      "name": "/auth/login",
+      "lambdaFunction": "authFunction",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/auth/refresh": {
+      "name": "/auth/refresh",
+      "lambdaFunction": "authFunction",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
