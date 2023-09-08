@@ -1,6 +1,6 @@
 # Vibefy
 
-Vibefy is a React-based web application that allows users to discover and explore music tracks, albums, and artists using the Spotify Web API. Users can search for songs or artists, and generate playlists containing similar tracks.
+A React-based web application that allows users to discover and explore music tracks, albums, and artists using the Spotify Web API. Users can search for songs or artists, and generate playlists containing similar tracks.
 
 ![vibefy-screenshot](https://github.com/Farid-Hamid-4/vibefy/assets/71334751/a5538142-a156-4a7c-b0df-b74868e21f2c)
 
