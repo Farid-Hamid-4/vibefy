@@ -28,4 +28,22 @@
 
 #search-form-control {
     font-family: 'PT Sans Caption','Inter', sans-serif;
+    border-radius: 20px;
+    background-color: #242424;
+    font-size: 0.875rem;
+    color: #fff;
+    border: 0;
+}
+
+.form-control:focus {
+    border-color: white;
+    box-shadow: 0 0 0 0.1rem rgba(255, 255, 255, 1);
+}
+
+.form-control::placeholder {
+    color: #a7a7a7;
+}
+
+.form-control::-ms-clear {
+    display: none;
 }
