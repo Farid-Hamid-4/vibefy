@@ -1,6 +1,8 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Button } from "react-bootstrap";
 import "./Login.css";
+import Lottie from "lottie-react";
+import Animation from "./Animation.json";
 
 const CLIENT_ID = "2c11048635dd4d6f928a6a38371cbfe9";
 const REDIRECT_URI = "https://main.d2xqpnct98klit.amplifyapp.com/";
@@ -24,6 +26,9 @@ export default function Login() {
         >
           Login with Spotify
         </Button>
+      </div>
+      <div style={{ height: "100%" }}>
+        <Lottie loop={true} animationData={Animation}/>
       </div>
     </Container>
   );
