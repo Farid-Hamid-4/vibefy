@@ -60,7 +60,7 @@ export default function TrackCards({ spotifyApi, track }) {
       <Card id="track-card">
         <Card.Img
           src={track.albumImage}
-          style={{ height: "8em", width: "8em" }}
+          style={{ height: "8rem", width: "8rem" }}
         />
         <Card.Body>
           <Card.Title id="track-name">{track.trackName}</Card.Title>

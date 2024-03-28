@@ -1,19 +1,19 @@
-    import "bootstrap/dist/css/bootstrap.min.css";
-    import { Container, Form, Dropdown, Image, Row } from "react-bootstrap";
-    import { useEffect, useState } from "react";
-    import SpotifyWebApi from "spotify-web-api-node";
-    import TrackCards from "./TrackCards.js";
-    import "./Dashboard.css";
+import { Container, Form, Dropdown, Image, Row, Col} from "react-bootstrap";
+import { useEffect, useState } from "react";
+import SpotifyWebApi from "spotify-web-api-node";
+import TrackCards from "./TrackCards.js";
+import "./Dashboard.css";
 
-    const CLIENT_ID = "2c11048635dd4d6f928a6a38371cbfe9";
-    const CLIENT_SECRET = "9bb6c018789e4e93818369e315931f37";
-    const REDIRECT_URI = "https://main.d2xqpnct98klit.amplifyapp.com/";
+const CLIENT_ID = "2c11048635dd4d6f928a6a38371cbfe9";
+const CLIENT_SECRET = "9bb6c018789e4e93818369e315931f37";
+// const REDIRECT_URI = "https://main.d2xqpnct98klit.amplifyapp.com/";
+const REDIRECT_URI = "http://localhost:3000/";
 
-    const spotifyApi = new SpotifyWebApi({
+const spotifyApi = new SpotifyWebApi({
     clientId: CLIENT_ID,
-    });
+});
 
-    export default function Dashboard({ code }) {
+export default function Dashboard({ code }) {
     const [accessToken, setAccessToken] = useState("");
     const [refreshToken, setRefreshToken] = useState("");
     const [expiresIn, setExpiresIn] = useState("");
@@ -42,12 +42,12 @@
             });
 
             if (response.ok) {
-            const data = await response.json();
-            setAccessToken(data.access_token);
-            setRefreshToken(data.refresh_token);
-            setExpiresIn(data.expires_in);
+                const data = await response.json();
+                setAccessToken(data.access_token);
+                setRefreshToken(data.refresh_token);
+                setExpiresIn(data.expires_in);
             } else {
-            console.error("Failed to obtain access token:", response.status);
+                console.error("Failed to obtain access token:", response.status);
             }
         } catch (error) {
             console.error("Failed to fetch access token:", error);
@@ -101,7 +101,7 @@
         if (!accessToken) return;
 
         let cancel = false;
-        spotifyApi.searchTracks(search, { limit: 15 }).then((res) => {
+        spotifyApi.searchTracks(search, { limit: 24 }).then((res) => {
         if (cancel) return;
         setSearchResults(
             res.body.tracks.items.map((track) => {
@@ -124,55 +124,31 @@
     }, [search, accessToken]);
 
     return (
-        <Container fluid id="here" style={{ width: "98%" }}>
-            <div className="d-flex align-items-center my-3">
-                <h1>Vibefy</h1>
-                <Dropdown style={{ marginLeft: "auto" }}>
-                <Dropdown.Toggle variant="success" style={{ alignItems: "center" }}>
-                    {userProfile.images && userProfile.images.length > 0 && (
-                    <Image id="profile-image" src={userProfile.images[0].url}></Image>
-                    )}
-                    {userProfile.display_name}
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu style={{ width: "100%" }}>
-                    {userProfile.uri && (
-                    <Dropdown.Item
-                        href={userProfile.uri}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Profile
-                    </Dropdown.Item>
-                    )}
-
-                    <Dropdown.Divider />
-
-                    <Dropdown.Item>Log out</Dropdown.Item>
-                </Dropdown.Menu>
-                </Dropdown>
-            </div>
-
-            <div>
-                <Form.Control
-                id="search-form-control"
-                placeholder="What do you want to search for?"
-                type="search"
-                value={search}
-                autoComplete="off"
-                onChange={(event) => setSearch(event.target.value)}
-                />
-
-                <Row xs={1} md={2} lg={3} className="g-4 my-3">
-                {searchResults.map((track) => (
-                    <TrackCards
-                    key={track.trackId}
-                    spotifyApi={spotifyApi}
-                    track={track}
+        <Container fluid>
+            <Row className="gap-2 py-4" style={{ height: "100vh" }}>
+                <Col className="ms-2" sm={3} style={{ backgroundColor: "#222222", borderRadius: "10px" }}>
+                    <h1>Vibefy</h1>
+                </Col>
+                <Col className="me-2 p-2" style={{ backgroundColor: "#222222", borderRadius: "10px" }}>
+                    <Form.Control
+                        id="search-form-control"
+                        placeholder="What do you want to search for?"
+                        type="search"
+                        value={search}
+                        autoComplete="off"
+                        onChange={(event) => setSearch(event.target.value)}
                     />
-                ))}
-                </Row>
-            </div>
+                    <Row xs={3} className="g-3 my-1">
+                        {searchResults.map((track) => (
+                            <TrackCards
+                                key={track.trackId}
+                                spotifyApi={spotifyApi}
+                                track={track}
+                            />
+                        ))}
+                    </Row>
+                </Col>
+            </Row>
         </Container>
     );
-    }
+}
