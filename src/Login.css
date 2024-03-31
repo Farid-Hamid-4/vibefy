@@ -11,15 +11,20 @@ h2 {
     font-family: 'PT Sans Caption','Inter', sans-serif;
 }
 
-.btn {
-    font-family: 'PT Sans Caption','Inter', sans-serif;
-    font-weight: 600;
-    background-color: #7ed321;
-    border-color: #7ed321;
-    color: black;
+#login-background {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37)
 }
 
-.btn:hover {
-    background-color: #7ed321;
-    border-color: #7ed321;
+#btn {
+    font-family: 'PT Sans Caption','Inter', sans-serif;
+    font-weight: 600;
+    background: linear-gradient(135deg, rgba(79, 193, 83, 0.75), rgba(79, 193, 83, 0.85));
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-color: rgb(79, 193, 83, 0.8);
+    color: #131313;
 }
