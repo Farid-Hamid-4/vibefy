@@ -13,11 +13,11 @@ const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&
 export default function Login() {
   return (
     <Container fluid>
-      <Row id="login-background" style={{ height: "100vh" }}>
-        <Col className="d-flex flex-column justify-content-center align-items-start ps-5">
+      <Row id="background" style={{ height: "100vh" }}>
+        <Col id="login" className="d-flex flex-column justify-content-center align-items-start ps-5">
           <h1>Vibefy</h1>
           <h2>Get recommended tracks based on a song of your choice</h2>
-          <Button active id="btn" href={AUTH_URL}>
+          <Button active id="login-button" href={AUTH_URL}>
             Login with Spotify
           </Button>
         </Col>
