@@ -1,6 +1,6 @@
 import { useState } from "react";
-import explicitImage from "./icons8-explicit-30.png";
 import { Card, Button, Col } from "react-bootstrap";
+import explicitImage from "./icons8-explicit-30.png";
 import "./TrackCards.css";
 
 export default function TrackCards({ spotifyApi, track }) {

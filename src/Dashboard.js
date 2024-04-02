@@ -1,4 +1,4 @@
-import { Container, Form, Dropdown, Image, Row, Col} from "react-bootstrap";
+import { Container, Form, Image, Row, Col} from "react-bootstrap";
 import { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
 import TrackCards from "./TrackCards.js";
@@ -25,33 +25,32 @@ export default function Dashboard({ code }) {
     // Obtain the access token in exchange for the authorization code
     useEffect(() => {
         const obtainAccessToken = async () => {
-        if (!code) return;
+            if (!code) return;
+            try {
+                const response = await fetch("https://accounts.spotify.com/api/token", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        Authorization: `Basic ` + btoa(CLIENT_ID + ":" + CLIENT_SECRET),
+                    },
+                    body: new URLSearchParams({
+                        grant_type: "authorization_code",
+                        code: code,
+                        redirect_uri: REDIRECT_URI,
+                    }),
+                });
 
-        try {
-            const response = await fetch("https://accounts.spotify.com/api/token", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                Authorization: `Basic ` + btoa(CLIENT_ID + ":" + CLIENT_SECRET),
-            },
-            body: new URLSearchParams({
-                grant_type: "authorization_code",
-                code: code,
-                redirect_uri: REDIRECT_URI,
-            }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setAccessToken(data.access_token);
-                setRefreshToken(data.refresh_token);
-                setExpiresIn(data.expires_in);
-            } else {
-                console.error("Failed to obtain access token:", response.status);
+                if (response.ok) {
+                    const data = await response.json();
+                    setAccessToken(data.access_token);
+                    setRefreshToken(data.refresh_token);
+                    setExpiresIn(data.expires_in);
+                } else {
+                    console.error("Failed to obtain access token:", response.status);
+                }
+            } catch (error) {
+                console.error("Failed to fetch access token:", error);
             }
-        } catch (error) {
-            console.error("Failed to fetch access token:", error);
-        }
         };
 
         obtainAccessToken();
@@ -60,20 +59,20 @@ export default function Dashboard({ code }) {
     // Obtain a new access token when the current one expires
     const refreshAccessToken = async () => {
         try {
-        const response = await fetch("https://accounts.spotify.com/api/token", {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Basic ` + btoa(CLIENT_ID + ":" + CLIENT_SECRET),
-            },
-            body: `grant_type=refresh_token&refresh_token=${refreshToken}`,
-        });
+            const response = await fetch("https://accounts.spotify.com/api/token", {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                Authorization: `Basic ` + btoa(CLIENT_ID + ":" + CLIENT_SECRET),
+                },
+                body: `grant_type=refresh_token&refresh_token=${refreshToken}`,
+            });
 
-        const data = await response.json();
-        setAccessToken(data.access_token);
-        setExpiresIn(data.expires_in);
+            const data = await response.json();
+            setAccessToken(data.access_token);
+            setExpiresIn(data.expires_in);
         } catch (error) {
-        console.log(error);
+            console.log(error);
         }
     };
 
@@ -123,13 +122,31 @@ export default function Dashboard({ code }) {
         return () => (cancel = true);
     }, [search, accessToken]);
 
+
+    // Get all the users playlists
+    useEffect(() => {
+        if (!accessToken) return;
+
+        spotifyApi.getUserPlaylists(userProfile.id)
+        .then(function(data) {
+            console.log('Retrieved playlists', data.body);
+        },function(err) {
+            console.log('Something went wrong!', err);
+        });
+    }, []);
+
     return (
         <Container fluid>
             <Row className="gap-2 py-4" style={{ height: "100vh" }}>
-                <Col className="ms-2" sm={3} style={{ backgroundColor: "#222222", borderRadius: "10px" }}>
-                    <h1>Vibefy</h1>
+                <Col className="ms-2 col-background" sm={3}>
+                    <h3>{userProfile.display_name}</h3>
+                    {userProfile.images && userProfile.images.length > 0 && (
+                        <Image src={userProfile.images[0].url} rounded/>
+                    )}
+                    <Col>
+                    </Col>
                 </Col>
-                <Col className="me-2 p-2" style={{ backgroundColor: "#222222", borderRadius: "10px" }}>
+                <Col className="me-2 p-2 col-background">
                     <Form.Control
                         id="search-form-control"
                         placeholder="What do you want to search for?"
