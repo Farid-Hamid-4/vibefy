@@ -6,8 +6,8 @@ import "./Dashboard.css";
 
 const CLIENT_ID = "2c11048635dd4d6f928a6a38371cbfe9";
 const CLIENT_SECRET = "9bb6c018789e4e93818369e315931f37";
-// const REDIRECT_URI = "https://main.d2xqpnct98klit.amplifyapp.com/";
-const REDIRECT_URI = "http://localhost:3000/";
+const REDIRECT_URI = "https://main.d2xqpnct98klit.amplifyapp.com/";
+// const REDIRECT_URI = "http://localhost:3000/";
 
 const spotifyApi = new SpotifyWebApi({
     clientId: CLIENT_ID,
