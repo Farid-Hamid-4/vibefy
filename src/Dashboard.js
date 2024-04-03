@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
 import TrackCards from "./TrackCards.js";
 import "./Dashboard.css";
+import PlaylistCards from "./PlaylistCards.js";
 
 const CLIENT_ID = "2c11048635dd4d6f928a6a38371cbfe9";
 const CLIENT_SECRET = "9bb6c018789e4e93818369e315931f37";
@@ -21,6 +22,7 @@ export default function Dashboard({ code }) {
     const [userProfile, setUserProfile] = useState([]);
     const [search, setSearch] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+    const [userPlaylists, setUserPlaylists] = useState([]);
 
     // Obtain the access token in exchange for the authorization code
     useEffect(() => {
@@ -88,10 +90,14 @@ export default function Dashboard({ code }) {
     }, [refreshToken, expiresIn]);
 
     // Set the access token on the API object to use it in later calls
+    // Also get the userProfile ID and their playlists
     useEffect(() => {
         if (!accessToken) return;
         spotifyApi.setAccessToken(accessToken);
-        spotifyApi.getMe().then((res) => setUserProfile(res.body));
+        spotifyApi.getMe().then((res) => setUserProfile(res.body));                 
+        spotifyApi.getUserPlaylists(userProfile.id).then((res) => {
+            setUserPlaylists(res.body.items);
+        });
     }, [accessToken]);
 
     // Search for tracks
@@ -122,18 +128,7 @@ export default function Dashboard({ code }) {
         return () => (cancel = true);
     }, [search, accessToken]);
 
-
-    // Get all the users playlists
-    useEffect(() => {
-        if (!accessToken) return;
-
-        spotifyApi.getUserPlaylists(userProfile.id)
-        .then(function(data) {
-            console.log('Retrieved playlists', data.body);
-        },function(err) {
-            console.log('Something went wrong!', err);
-        });
-    }, []);
+    // WORKING ON CONTAINING THE PLAYLIST DATA AND SENDING IT TO THE COMPONENT FOR RENDERING
 
     return (
         <Container fluid>
@@ -143,7 +138,15 @@ export default function Dashboard({ code }) {
                     {userProfile.images && userProfile.images.length > 0 && (
                         <Image src={userProfile.images[0].url} rounded/>
                     )}
-                    <Col>
+
+                    <Col className="">
+                        {userPlaylists.map((playlist) => (
+                            <PlaylistCards
+                                key={playlist.id}
+                                spotifyApi={spotifyApi}
+                                playlist={playlist}
+                            />
+                        ))}
                     </Col>
                 </Col>
                 <Col className="me-2 p-2 col-background">

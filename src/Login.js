@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Button, Row, Col } from "react-bootstrap";
 import Lottie from "lottie-react";
-import Animation from "./Animation3.json";
+import Animation from "./Animation.json";
 import "./Login.css";
 
 const CLIENT_ID = "2c11048635dd4d6f928a6a38371cbfe9";
