@@ -7,8 +7,8 @@ import PlaylistCards from "./PlaylistCards.js";
 
 const CLIENT_ID = "2c11048635dd4d6f928a6a38371cbfe9";
 const CLIENT_SECRET = "9bb6c018789e4e93818369e315931f37";
-const REDIRECT_URI = "https://main.d2xqpnct98klit.amplifyapp.com/";
-// const REDIRECT_URI = "http://localhost:3000/";
+// const REDIRECT_URI = "https://main.d2xqpnct98klit.amplifyapp.com/";
+const REDIRECT_URI = "http://localhost:3000/";
 
 const spotifyApi = new SpotifyWebApi({
     clientId: CLIENT_ID,
@@ -128,26 +128,28 @@ export default function Dashboard({ code }) {
         return () => (cancel = true);
     }, [search, accessToken]);
 
-    // WORKING ON CONTAINING THE PLAYLIST DATA AND SENDING IT TO THE COMPONENT FOR RENDERING
-
     return (
         <Container fluid>
             <Row className="gap-2 py-4" style={{ height: "100vh" }}>
                 <Col className="ms-2 col-background" sm={3}>
-                    <h3>{userProfile.display_name}</h3>
-                    {userProfile.images && userProfile.images.length > 0 && (
-                        <Image src={userProfile.images[0].url} rounded/>
-                    )}
-
-                    <Col className="">
-                        {userPlaylists.map((playlist) => (
-                            <PlaylistCards
-                                key={playlist.id}
-                                spotifyApi={spotifyApi}
-                                playlist={playlist}
-                            />
-                        ))}
-                    </Col>
+                    <Row>
+                        <h3>{userProfile.display_name}</h3>
+                        {userProfile.images && userProfile.images.length > 0 && (
+                            <Image src={userProfile.images[0].url} rounded/>
+                        )}
+                    </Row>
+                    
+                    <Row>
+                        <Col>
+                            {userPlaylists.map((playlist) => (
+                                <PlaylistCards
+                                    key={playlist.id}
+                                    spotifyApi={spotifyApi}
+                                    playlist={playlist}
+                                />
+                            ))}
+                        </Col>
+                    </Row>
                 </Col>
                 <Col className="me-2 p-2 col-background">
                     <Form.Control

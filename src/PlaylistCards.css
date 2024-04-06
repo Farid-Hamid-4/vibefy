@@ -1,0 +1,9 @@
+#playlist-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: none;
+    border: none;
+    color: white;
+    margin-top: 1em;
+}
