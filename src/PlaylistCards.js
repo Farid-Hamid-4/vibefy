@@ -4,7 +4,7 @@ import "./PlaylistCards.css";
 export default function PlaylistCards({ playlist }) {
 
     return (
-        <Card id="playlist-card">
+        <Card className="playlist-card p-2">
             <Card.Img
                 src={playlist.images[0].url}
                 style={{ width: "6em", height: "6em" }}

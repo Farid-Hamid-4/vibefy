@@ -1,9 +1,10 @@
-import { Container, Form, Image, Row, Col} from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Container, Form, Image, Row, Col, Button} from "react-bootstrap";
 import { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
 import TrackCards from "./TrackCards.js";
-import "./Dashboard.css";
 import PlaylistCards from "./PlaylistCards.js";
+import "./Dashboard.css";
 
 const CLIENT_ID = "2c11048635dd4d6f928a6a38371cbfe9";
 const CLIENT_SECRET = "9bb6c018789e4e93818369e315931f37";
@@ -131,15 +132,16 @@ export default function Dashboard({ code }) {
     return (
         <Container fluid>
             <Row className="gap-2 py-4" style={{ height: "100vh" }}>
-                <Col className="ms-2 col-background" sm={3}>
-                    <Row>
-                        <h3>{userProfile.display_name}</h3>
-                        {userProfile.images && userProfile.images.length > 0 && (
-                            <Image src={userProfile.images[0].url} rounded/>
-                        )}
+                <Col className="d-flex flex-column gap-2 ms-2" sm={3}>
+                    <Row className="d-flex align-items-center p-2 section-background">
+                        <Col className="px-0 display-name">{userProfile.display_name}</Col>
+                        <Col className="d-flex justify-content-end px-0">
+                            {userProfile.images && userProfile.images.length > 0 && (
+                                <Image src={userProfile.images[0].url} rounded/>
+                            )}
+                        </Col>
                     </Row>
-                    
-                    <Row>
+                    <Row className="flex-grow-1 section-background">
                         <Col>
                             {userPlaylists.map((playlist) => (
                                 <PlaylistCards
@@ -150,10 +152,13 @@ export default function Dashboard({ code }) {
                             ))}
                         </Col>
                     </Row>
+                    <Row className="p-0 section-background">
+                        <Button active>Logout</Button>
+                    </Row>
                 </Col>
-                <Col className="me-2 p-2 col-background">
+                <Col className="me-2 p-2 section-background">
                     <Form.Control
-                        id="search-form-control"
+                        className="search-form-control"
                         placeholder="What do you want to search for?"
                         type="search"
                         value={search}
