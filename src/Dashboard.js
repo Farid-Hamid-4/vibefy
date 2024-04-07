@@ -142,13 +142,9 @@ export default function Dashboard({ code }) {
                         </Col>
                     </Row>
                     <Row className="flex-grow-1 section-background">
-                        <Col>
+                        <Col className="mt-2">
                             {userPlaylists.map((playlist) => (
-                                <PlaylistCards
-                                    key={playlist.id}
-                                    spotifyApi={spotifyApi}
-                                    playlist={playlist}
-                                />
+                                <PlaylistCards key={playlist.id} spotifyApi={spotifyApi} playlist={playlist}/>
                             ))}
                         </Col>
                     </Row>
@@ -156,7 +152,7 @@ export default function Dashboard({ code }) {
                         <Button active>Logout</Button>
                     </Row>
                 </Col>
-                <Col className="me-2 p-2 section-background">
+                <Col className="me-2 p-2 section-background" style={{ maxHeight: "100%", overflowY: "auto" }}>
                     <Form.Control
                         className="search-form-control"
                         placeholder="What do you want to search for?"
@@ -165,7 +161,7 @@ export default function Dashboard({ code }) {
                         autoComplete="off"
                         onChange={(event) => setSearch(event.target.value)}
                     />
-                    <Row xs={3} className="g-3 my-1">
+                    <Row sm={3} className="g-3 my-1">
                         {searchResults.map((track) => (
                             <TrackCards
                                 key={track.trackId}
