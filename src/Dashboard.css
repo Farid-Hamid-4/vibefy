@@ -1,38 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap');
 
-#profile-image{
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    margin-right: 10px;
-    vertical-align: middle;
+.section-background {
+    background-color: #222222;
+    border-radius: 10px;
 }
 
-.dropdown-toggle::after {
-    font-size: 24px;
-    margin-left: 10px;
-    vertical-align: middle;
-}
-
-.dropdown-item:active {
-    background-color: #1DB954;
-    color: white;
-}
-
-#display-name {
-    margin-top: 0.5em;
-    font-size: 1.5em;
+.display-name {
+    font-size: 2em;
     font-family: 'PT Sans Caption','Inter', sans-serif;
 }
 
-#search-form-control {
+.search-form-control {
     font-family: 'PT Sans Caption','Inter', sans-serif;
     border-radius: 20px;
     background-color: #242424;
     font-size: 0.875rem;
     color: #fff;
-    border: 0;
+    width: 35%;
 }
 
 .form-control:focus {
