@@ -4,7 +4,8 @@ import "./Login.css";
 
 const CLIENT_ID = "2c11048635dd4d6f928a6a38371cbfe9";
 const REDIRECT_URI = "https://main.d2xqpnct98klit.amplifyapp.com/";
-const SCOPES = "user-top-read playlist-modify-private streaming user-read-email user-read-private user-library-read user-library-modify user-read-playback-state user-modify-playback-state";
+// const REDIRECT_URI = "http://localhost:3000/";
+const SCOPES = "playlist-modify-private playlist-modify-public playlist-read-private playlist-read-collaborative";
 const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=${SCOPES}`;
 
 export default function Login() {
