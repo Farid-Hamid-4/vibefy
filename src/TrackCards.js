@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Card, Button, Col } from "react-bootstrap";
-import explicitImage from "./icons8-explicit-30.png";
+import explicitImage from "./explicit-symbol.png";
+import { toast } from "react-toastify";
 import "./TrackCards.css";
 
 export default function TrackCards({ spotifyApi, track }) {
@@ -49,6 +50,7 @@ export default function TrackCards({ spotifyApi, track }) {
             recommendations.tracks.map((track) => track.uri)
           );
           setPlaylistCreated(true);
+          toast.success("Playlist created successfully!");
         });
     }
   }
