@@ -24,20 +24,6 @@ Link to live website: https://main.d2xqpnct98klit.amplifyapp.com/
 3. Click on the `+` button on the track cards to generate a playlist containing 50 recommended tracks based on the track of your choice.
 
 3. Click on the `+` button on the track cards to generate a playlist containing 50 recommended tracks based on the track of your choice.
-
-## Notes of things to-do
-
-1. Store Access Token in local storage and create a function getAccessToken() for use in requests
-    - For persisiting access tokens and for user not to lose access to web-api on page refresh
-
-2. Re-do the authentication process and instead use spotify-web-api-node
-
-3. Clean up the search form design
-
-4. Store the client secret in a .env file
-
-5. Use react-bootstrap placeholders for loading playlist/track cards
-
 6. Implement logout functionality
 
 7. Change UI design with white/purple theme and change fonts
