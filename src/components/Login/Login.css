@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap");
+
+.login-background {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0)
+  );
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  height: 100vh;
+}
+
+#login-headings h1 {
+  font-family: "Rubik", "Inter", sans-serif;
+  font-size: 3.5rem;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 400px) {
+  #login-headings h1 {
+    font-size: 2.1rem;
+  }
+}
+
+#login-headings h2 {
+  font-family: "PT Sans Caption", "Inter", sans-serif;
+  font-size: 2.5em;
+}
+
+@media screen and (max-width: 400px) {
+  #login-headings h2 {
+    font-size: 1rem;
+  }
+}
+
+#login-button {
+  font-family: "PT Sans Caption", "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 1.15rem;
+  background: linear-gradient(
+    135deg,
+    rgba(79, 193, 83, 0.65),
+    rgba(79, 193, 83, 0.85)
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: rgba(79, 193, 83, 0.8);
+  color: #131313;
+  transition: transform 0.3s;
+  transform-origin: top left;
+}
+
+@media screen and (max-width: 400px) {
+  #login-button {
+    font-size: 0.7rem;
+  }
+}
+
+#login-button:hover {
+  transform: scale(1.05);
+}

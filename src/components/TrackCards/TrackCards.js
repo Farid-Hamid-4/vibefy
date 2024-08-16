@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Card, Button, Col } from "react-bootstrap";
-import explicitImage from "./explicit-symbol.png";
+import explicitImage from "./assets/explicit-symbol.png";
 import { toast } from "react-toastify";
 import "./TrackCards.css";
 
