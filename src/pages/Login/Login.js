@@ -1,14 +1,14 @@
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Button, Row, Col } from "react-bootstrap";
 import Lottie from "lottie-react";
 import Animation from "./assets/Animation.json";
 import "./Login.css";
 
-const CLIENT_ID = "2c11048635dd4d6f928a6a38371cbfe9";
-const REDIRECT_URI = "http://localhost:3000/";
-const SCOPES =
-  "playlist-modify-private playlist-modify-public playlist-read-private playlist-read-collaborative";
-const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=${SCOPES}`;
+const clientId = `${process.env.REACT_APP_SPOTIFY_CLIENT_ID}`;
+const redirectUri = `${process.env.REACT_APP_SPOTIFY_REDIRECT_URI}`;
+const scopes = `${process.env.REACT_APP_SPOTIFY_SCOPES}`;
+const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scopes}`;
 
 export default function Login() {
   return (
@@ -20,7 +20,7 @@ export default function Login() {
         >
           <h1>Vibefy</h1>
           <h2>Curate a playlist based on a song of your choice</h2>
-          <Button active id="login-button" href={AUTH_URL}>
+          <Button active id="login-button" href={authUrl}>
             Login with Spotify
           </Button>
         </Col>

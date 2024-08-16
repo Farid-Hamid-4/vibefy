@@ -1,23 +1,22 @@
-import Dashboard from "./components/Dashboard/Dashboard";
-import Login from "./components/Login/Login";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import Login from "./pages/Login/Login";
+import Dashboard from "./pages/Dashboard/Dashboard";
 import "./App.css";
 
-const code = new URLSearchParams(window.location.search).get("code");
-
 function App() {
-  return code ? (
-    <div>
-      <Dashboard code={code} />
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-      />
-    </div>
-  ) : (
-    <Login />
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </Router>
   );
 }
 

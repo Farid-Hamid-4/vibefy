@@ -2,19 +2,22 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Form, Image, Row, Col } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
-import TrackCards from "../TrackCards/TrackCards";
-import PlaylistCards from "../PlaylistCards/PlaylistCards";
+import TrackCards from "../../components/TrackCards/TrackCards";
+import PlaylistCards from "../../components/PlaylistCards/PlaylistCards";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Dashboard.css";
 
-const CLIENT_ID = "2c11048635dd4d6f928a6a38371cbfe9";
-const CLIENT_SECRET = "9bb6c018789e4e93818369e315931f37";
-const REDIRECT_URI = "http://localhost:3000/";
+const clientId = `${process.env.REACT_APP_SPOTIFY_CLIENT_ID}`;
+const clientSecret = `${process.env.REACT_APP_SPOTIFY_CLIENT_SECRET}`;
+const redirectUri = `${process.env.REACT_APP_SPOTIFY_REDIRECT_URI}`;
+const code = new URLSearchParams(window.location.search).get("code");
 
 const spotifyApi = new SpotifyWebApi({
-  clientId: CLIENT_ID,
+  clientId: clientId,
 });
 
-export default function Dashboard({ code }) {
+export default function Dashboard() {
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
   const [expiresIn, setExpiresIn] = useState("");
@@ -33,12 +36,12 @@ export default function Dashboard({ code }) {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Basic ` + btoa(CLIENT_ID + ":" + CLIENT_SECRET),
+            Authorization: `Basic ` + btoa(clientId + ":" + clientSecret),
           },
           body: new URLSearchParams({
             grant_type: "authorization_code",
             code: code,
-            redirect_uri: REDIRECT_URI,
+            redirect_uri: redirectUri,
           }),
         });
 
@@ -65,7 +68,7 @@ export default function Dashboard({ code }) {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          Authorization: `Basic ` + btoa(CLIENT_ID + ":" + CLIENT_SECRET),
+          Authorization: `Basic ` + btoa(clientId + ":" + clientSecret),
         },
         body: `grant_type=refresh_token&refresh_token=${refreshToken}`,
       });
@@ -175,6 +178,11 @@ export default function Dashboard({ code }) {
           </Row>
         </Col>
       </Row>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+      />
     </Container>
   );
 }
